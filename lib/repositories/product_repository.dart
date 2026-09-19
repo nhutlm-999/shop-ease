@@ -42,4 +42,21 @@ class ProductRepository {
       throw Exception('Failed to load product by id');
     }
   }
+
+  // 1.3 – Helper functions dùng collections
+  List<Product> filterByPrice(List<Product> products, double min, double max){
+    return products.where((p) => p.price >= min && p.price <= max).toList();
+  }
+
+  List<Product> sortByRating(List<Product> products, {bool ascending = true}) {
+    final sorted = List<Product>.from(products);
+    sorted.sort((a,b) => b.rating.rate.compareTo(a.rating.rate)); // cao -> thấp
+    return sorted;
+  }
+
+  List<Product> search(List<Product> products, String query) {
+    return products.where((p) => p.title.toLowerCase().contains(query.toLowerCase()) 
+    || p.description.toLowerCase().contains(query.toLowerCase()) 
+            || p.category.toLowerCase().contains(query.toLowerCase())).toList();
+  }
 }
